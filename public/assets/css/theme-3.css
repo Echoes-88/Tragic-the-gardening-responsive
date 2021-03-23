@@ -1,0 +1,531 @@
+body {
+  height: 100vh;
+ }
+ 
+ div#preload { display: none; }
+ 
+ @font-face {
+     font-family: "AdobeDia";
+     src: url('../font/AdobeDia.ttf');
+ }
+
+ @font-face {
+  font-family: "SierraMadre-JVYM";
+  src: url('../font/SierraMadre-JVYM.ttf');
+}
+ 
+ p {
+     color: #ffffff;
+     font-size: 1.3em;
+     font-family: 'Staatliches';
+ }
+
+ img {
+  user-drag: none; 
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+ }
+ 
+ 
+ .container {
+      /* background-image: url(../img/background2.jpg);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain; */
+      background-color: #3e7688;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+ }
+
+ .flex {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+ }
+
+ .logo {
+     /* margin: auto; */
+     display: block;
+     padding: 2rem 0;
+     /* height: 40%; */
+ }
+ 
+ .menu {
+  /* margin: auto; */
+  width: 25%;
+  display: block;
+ }
+ 
+ .menu a {
+      color:#FDFF2F;
+     padding: 1rem 3rem;
+     display: block;
+ }
+ 
+ .menu a:hover {
+     color: #223f48;
+ }
+ 
+ .menu-list {
+ background-color: #223f48;
+
+ list-style: none;
+ margin: 1rem;
+ font-family: 'AdobeDia';
+ text-align: center;
+ font-size: 1.6em;
+ cursor: pointer;
+ }
+ 
+ .menu li:hover {
+     background-color: #FDFF2F;
+     color: #101010;
+ }
+ 
+ li:hover a {
+     color: inherit;
+ }
+ 
+ 
+ .is-hidden {
+     display: none;
+ }
+ 
+ /* NAV */
+ .nav-button {
+     background-color: #101010;
+     color:greenyellow;
+     font-family: 'AdobeDia';
+     text-align: center;
+     font-size: 1.6em;
+     cursor: pointer;
+     margin-top:2rem;
+ }
+ 
+ /* FORM */
+ .form {
+  /* margin: auto; */
+  width: 40%;
+  text-align: center;
+
+ }
+
+ .form-label-group {
+     margin-top: 1rem;
+ }
+
+ .form-control {
+  width: 50%;
+}
+ 
+ label {
+     display: block;
+     color: #fdff2f;
+     font-size: 1.3em;
+     font-family: 'Staatliches';
+ 
+ }
+ 
+ input
+ {   
+      color: #4c4c4c;
+      background-color: white;
+      height: 1.8rem;
+      padding-left: 10px;
+      text-decoration: none;
+      border: 2px solid #e0e0e0;
+      width: 64%;
+ }
+
+ input[type=checkbox] {
+  width: 5%;
+  height: 18px;
+  margin-top: 1rem;
+  }
+ 
+ /* FORM */
+ article {
+     text-align: center;
+ }
+ 
+ button {
+     background-color: #223f48;
+     color:#FDFF2F;
+     font-family: 'Staatliches';
+     text-align: center;
+     font-size: 1.2em;
+     cursor: pointer;
+     margin: 0.7rem auto;
+     display: block;
+ }
+
+ button:hover {
+  background-color: #0c191d;
+  color:#FDFF2F;
+ }
+
+ .inactive {
+     color:rgb(219, 255, 166);
+     background-color: #2a2a2a;
+ }
+
+ /* BOARD */
+ .board-game {
+  background-color: #3e7688;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  grid-template-rows: 70% 30%;
+  grid-template-areas: 
+    "sidebar boardArea boardArea boardArea boardArea"
+    "playerArea playerArea playerArea playerArea playerArea";
+ }
+
+ 
+
+ .sideArea {
+  /* background-image: url(../img/board/bckgrd-Infos.jpg); */
+  background-repeat: repeat;
+  /* min-width: 250px; */
+  height: 100%;
+  position: relative;
+  background-color: #3c6e7e;
+  grid-area: sidebar;
+}
+
+.boardArea {
+  /* background-image: url(../img/board/bckgrd-board.jpg);    */
+  background-color: #3e7688;
+  width: inherit;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap ;
+  display: inline-block;
+  grid-area: boardArea;
+}
+
+ .playerCards {
+    background-color: #365762;
+    align-items: flex-end;
+    overflow-x: scroll;
+    overflow: auto;
+    border-top: 7px solid #1e2e33;
+    border-left: 7px solid #1e2e33;
+    border-right: 7px solid #1e2e33;
+    padding: 0.3rem;
+    /* min-height:14rem; */
+    grid-area: playerArea;
+    display: -webkit-box;
+    overflow: auto;
+    grid-template-columns: 14% 14% 14% 14% 14% 14% 14%;
+    grid-template-rows: 100%;
+    grid-template-areas: 
+      "cardComponent1 cardComponent2 cardComponent3 cardComponent4 cardComponent5 cardComponent6 cardComponent7";
+}
+
+
+
+      /* SIDE AND DROP */
+      /* .side-and-drop {
+      width: 100%;
+      height: 65%;
+      display: flex;
+      grid-area: sidebar;
+      } */
+
+      /* SIDE AREA */
+
+      .black-filter {
+          background-color: rgba(0, 0, 0, 0.7);
+          height: 100%;
+          width: 100%;
+          position: fixed;
+          z-index: 10;
+      }
+
+      .exemple-card {
+          position: fixed;
+          left: 40%;
+          top: 18%;
+          z-index: 11;
+      }
+
+      .close-button {
+          position: fixed;
+          left: 58%;
+          top: 12%;
+          z-index: 11;
+      }
+
+      .border-left-side {
+          background-image: url(../img/board/border-left-infos.jpg);
+          background-repeat: repeat-y;
+          width: 6px;
+      }
+
+      .infosFieldContainer {
+          background-color: white;
+          width: 83%;
+          border-radius: 10px;
+          bottom: 23%;
+          position: absolute;
+          margin-left: 9%;
+          padding: 0.8rem;
+          display: flex;
+      }
+
+      .infosField {
+        color: rgb(49, 49, 49);
+        font-family: 'Staatliches';
+        text-align: center;
+        font-size: 1em;
+        z-index: 2;
+      }
+
+      .infosField-bubble {
+          background-image: url(../img/board/buble-speak.png);
+          height: 10%;
+          background-repeat: no-repeat;
+          bottom: 14%;
+          position: absolute;
+          width: 20%;
+          left: 41%;
+          z-index: 1;
+      }
+
+      .vault-boy {
+          background-image: url(../img/board/vault-boy.png);
+          width: 50%;
+          height: 20%;
+          background-size: contain;
+          background-position: center;
+          background-repeat: no-repeat;
+          position: absolute;
+          bottom: 0;
+      }
+
+      .endOfRound {
+        position: absolute;
+        left: 25%;
+        top: 45%;
+        z-index:3;
+      }
+
+      .cancel {
+        position: absolute;
+        left: 25%;
+        top: 55%;
+      }
+    
+
+      /* BOARD AREA */
+
+
+    
+
+
+      .show-message {
+          background-color: rgba(255, 255, 255, 0.4);
+      }
+
+      .show-message p {
+          color: #616161;
+          text-shadow: 2px 2px 2px #CEC1B4;
+          font-family: 'Staatliches';
+          margin: auto;
+      }
+
+
+      /* PLAYER AREA */
+
+
+      .border-player-area {
+          background-image: url(../img/board/border-player-cards.jpg);
+          background-repeat: repeat-x;
+          width: 100%;
+          height: 5%;
+      }
+
+
+  /* ANIMATIONS */
+  .animationContainer {
+      width: 100%;
+      height: 100%;
+      margin: auto;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+  }
+
+  .cogwheel {
+      color: white;
+      font-size: 10em;
+      text-shadow: 6em 6em 6em #000000;
+      animation: rotation 4s infinite linear;
+      position: absolute;
+      left: 50%;
+      top: 25%;
+  }
+
+  .textArea {
+      font-size: 3em;
+      text-shadow: 2px 2px 2px #CEC1B4;
+      position: absolute;
+      left: 50%;
+      top: 10%;
+      color:rgb(0, 0, 0);
+      font-family: 'AdobeDia';
+
+  }
+
+/* ANIMATIONS */
+
+.facticePosition, .moveCpterCard {
+  animation: moveCpterCard 1s linear;
+}
+@keyframes moveCpterCard {
+  from {
+      top: var(--topStart);
+      left: var(--leftStart);
+    }
+    to {
+      top: var(--topEnd);
+      left: var(--leftEnd);
+    }
+}
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.blink_hit-point {
+  color: red;
+  animation: blinker-hit-point 0.5s linear infinite;
+}
+
+@keyframes blinker-hit-point {
+  50% {
+
+    opacity: 0;
+  }
+}
+
+.shake {
+  animation: shake 1.2s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-4px, 0, -10px);
+  }
+  
+  20%, 80% {
+    transform: translate3d(5px, 0, 15px);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-8px, 0, -15px);
+  }
+
+  40%, 60% {
+    transform: translate3d(8px, 0, 15px);
+  }
+}
+
+
+@keyframes rotation {
+  from {
+      -webkit-transform: rotate(0deg);
+  }
+  to {
+      -webkit-transform: rotate(360deg);
+  }
+}
+
+/* mobile paysage */
+@media (max-height: 500px) {
+  .board-game {
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 100%;
+    grid-template-areas: 
+      "playerArea boardArea boardArea sidebar";
+  }
+
+  .playerCards {
+    overflow-y: scroll;
+    border-bottom: 7px solid #1e2e33;
+    overflow-y: none;
+    flex-wrap: wrap;
+  }
+
+  .infosFieldContainer {
+    width: 60%;
+  }
+}
+
+/* mobile portrait */
+@media (max-width: 500px) {
+  .board-game {
+    grid-template-columns: 100%;
+    grid-template-rows: 20% 55% 25%;
+    grid-template-areas: 
+      "sidebar"
+      "boardArea"
+      "playerArea"
+      ;
+  }
+
+  .vault-boy {
+    width: 250px;
+    height: 100px;
+    background-size: contain;
+    background-position: left;
+    background-repeat: no-repeat;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  .infosFieldContainer {
+    width: 45%;
+    margin-left:25%;
+    bottom:40%;
+  }
+
+  .infosField-bubble {
+    height: 26%;
+    bottom: 38%;
+    width: 24%;
+    left: 23%;
+  }
+
+  .endOfRound {
+    position: absolute;
+    left: 30%;
+    top: 68%;
+  }
+
+  .cancel {
+    position: absolute;
+    left: 55%;
+    top: 68%;
+  }
+
+}

@@ -1,0 +1,179 @@
+.drop-area {
+    width: 100%;
+    height: 50%;
+    padding:1%;
+    align-items: flex-end;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    white-space: nowrap;
+    display: flex;
+}
+
+.cpterCards {
+    width: 100%;
+    height: 50%;
+    padding: 1%;
+    display: flex;
+}
+
+.cpterCard {
+    z-index:5;
+}
+
+/* .playerCards {
+    background-color: #365762;
+    height: 100%;
+    width: 100vw;
+    display: -webkit-inline-box;
+    align-items: flex-end;
+    overflow-x: scroll;
+    overflow: auto;
+    border-top: 7px solid #1e2e33;
+    border-left: 7px solid #1e2e33;
+    border-right: 7px solid #1e2e33;
+    padding: 0.3rem;
+} */
+
+.cardComponent {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+.drop-area .cardComponent {
+    max-height: 210px;
+  }
+
+.card-main-container {
+    height: 100%;
+}
+
+.backgroundImage {
+    position: absolute;
+    height: 100%;
+    float: left;
+}
+
+    .card-background {
+        z-index: 1;
+        max-height: -webkit-fill-available;
+        position: absolute;
+    }
+
+.card-text-container {
+    box-sizing: content-box;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.card {
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    background-position: center;
+    flex-direction: column;
+    width: fit-content;
+}
+
+.fond {
+    position: absolute;
+    height: 100%;
+}
+
+.haut {
+    height: 15%;
+    padding-left: 10%;
+    padding-top: 4%;
+    z-index:3;
+}
+.milieu {
+    height: 70%;
+    z-index:3;
+}
+.bas {
+    height: 15%;
+    z-index:3;
+    padding-left: 10%;
+    padding-top: 4%;
+}
+   
+   .card-picture {
+    z-index: 3;
+    height: 139%;
+    margin-top: -20%;
+   }
+
+   .boost {
+    height: 63%;
+    margin-top:14%;
+   }
+
+   .attack, .defense, .hit_point, .boost {
+    font-size: 1.2em;
+    position: relative;
+    font-family: 'Staatliches';
+   }
+
+   .card-name {
+    font-size: 0.7em;
+
+    margin-left: 11%;
+    color:white;
+    font-family: 'Staatliches';
+   }
+
+   .attack {
+    color: #9f5252;
+   }
+
+   .defense {
+    color:#52869f;
+    margin-left: 70%;
+    }
+
+    .hit_point {
+    color:#535f37;
+    }
+
+
+    @media (max-width:900px) {
+        .haut {
+            padding-top: 2%;
+        }
+        .attack, .defense, .hit_point, .boost {
+            font-size: 1em;
+        }
+        .card-name {
+            font-size: 0.6em;
+        }
+    }
+
+
+@media (max-height: 500px) {
+
+    .cardComponent {
+        /* height: 210px; */
+        height: 20vh;
+        min-height: 130px;
+      }
+
+    /* .cardComponent {
+        margin: auto;
+    } */
+    .playerCards .cardComponent {
+        margin: auto;
+    }
+
+    .attack, .defense, .hit_point {
+        font-size: 3.5vh;
+        }
+
+    .card-name {
+        font-size: 3vh;
+    }
+}
