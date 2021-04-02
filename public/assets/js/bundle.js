@@ -12,10 +12,10 @@ const DomRenderCard = require('../DomRender/Card');
 var InitGame = {
 
     init: function() {
-        // if(event) {
-        //     event.preventDefault();
-        // }
-        event.preventDefault();
+         if(event) {
+             event.preventDefault();
+         }
+       // event.preventDefault();
 
         console.log(Store)
 
@@ -64,6 +64,7 @@ var InitGame = {
 }
 
 module.exports = InitGame;
+
 },{"../DomRender/Card":5,"../Middleware/Deck":9,"../Store":11,"./PlayGame":3}],2:[function(require,module,exports){
 const DomRenderForm = require('../DomRender/Form');
 const DomRenderMenu = require('../DomRender/Menu');
@@ -865,7 +866,6 @@ const Form = {
     createAccount: () => {
         
         return `
-        <img src="assets/img/Logo.png" class="logo">
         <form action="" class="form" id="createAccount">
 
           <div class="form-label-group">
@@ -899,8 +899,9 @@ const Form = {
           </div>
 
               <button type="submit" class="">Submit</button>
+              <button class="go-back">GO BACK</button>
       </form>
-      <button class="go-back">GO BACK</button>
+
         `
     }
 }
@@ -969,7 +970,7 @@ const axios = require('axios');
 
 const MiddlewareDeck = {
 
-    baseUrl: 'http://localhost:5000',
+    baseUrl: 'http://54.209.27.122:5000',
 
     createOne: async (data) => {
 
@@ -1038,7 +1039,7 @@ const Store = require('../Store');
 
 const MiddlewareLog = {
 
-    baseUrl: 'http://localhost:5000',
+    baseUrl: 'http://54.209.27.122:5000',
 
     handleLogin: async (data) => {
 

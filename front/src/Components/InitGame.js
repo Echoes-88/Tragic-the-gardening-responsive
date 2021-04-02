@@ -11,10 +11,10 @@ const DomRenderCard = require('../DomRender/Card');
 var InitGame = {
 
     init: function() {
-        // if(event) {
-        //     event.preventDefault();
-        // }
-        event.preventDefault();
+         if(event) {
+             event.preventDefault();
+         }
+       // event.preventDefault();
 
         console.log(Store)
 
