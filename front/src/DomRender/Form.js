@@ -27,7 +27,6 @@ const Form = {
     createAccount: () => {
         
         return `
-        <img src="assets/img/Logo.png" class="logo">
         <form action="" class="form" id="createAccount">
 
           <div class="form-label-group">
@@ -61,8 +60,9 @@ const Form = {
           </div>
 
               <button type="submit" class="">Submit</button>
+              <button class="go-back">GO BACK</button>
       </form>
-      <button class="go-back">GO BACK</button>
+
         `
     }
 }

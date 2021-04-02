@@ -49,6 +49,10 @@ body {
  .logo {
      height: 40%;
  }
+
+ .logo2 {
+  height: 25%;
+ }
  
  .menu, .form {
   width: 65%;
@@ -109,11 +113,10 @@ body {
   display: flex;
   flex-direction: column;
   text-align: center;
-
  }
 
  .form-label-group {
-     margin-top: 1rem;
+  margin-top: 2%;
  }
 
  .form-control {
@@ -135,7 +138,6 @@ body {
      display: block;
      color: #fdff2f;
      font-family: 'Staatliches';
-     font-size: 1.3em;
  }
  
  input
