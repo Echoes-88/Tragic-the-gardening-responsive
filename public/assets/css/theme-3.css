@@ -31,13 +31,9 @@ body {
  
  
  .container {
-      /* background-image: url(../img/background2.jpg);
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: contain; */
       background-color: #3e7688;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -51,15 +47,13 @@ body {
  }
 
  .logo {
-     /* margin: auto; */
-     display: block;
-     padding: 2rem 0;
-     /* height: 40%; */
+     height: 40%;
  }
  
- .menu {
-  /* margin: auto; */
-  width: 25%;
+ .menu, .form {
+  width: 65%;
+  height: 40%;
+  max-width: 25rem;
   display: block;
  }
  
@@ -68,21 +62,22 @@ body {
      padding: 1rem 3rem;
      display: block;
  }
- 
+
  .menu a:hover {
      color: #223f48;
  }
  
  .menu-list {
  background-color: #223f48;
-
  list-style: none;
  margin: 1rem;
  font-family: 'AdobeDia';
  text-align: center;
- font-size: 1.6em;
+ font-size: 1.5em;
+ line-height: 1.5rem;
  cursor: pointer;
  }
+
  
  .menu li:hover {
      background-color: #FDFF2F;
@@ -111,8 +106,8 @@ body {
  
  /* FORM */
  .form {
-  /* margin: auto; */
-  width: 40%;
+  display: flex;
+  flex-direction: column;
   text-align: center;
 
  }
@@ -122,15 +117,25 @@ body {
  }
 
  .form-control {
-  width: 50%;
+  width: 100%;
+}
+
+.deck-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.deck {
+  height: 50%;
 }
  
  label {
      display: block;
      color: #fdff2f;
-     font-size: 1.3em;
      font-family: 'Staatliches';
- 
+     font-size: 1.3em;
  }
  
  input
@@ -142,6 +147,7 @@ body {
       text-decoration: none;
       border: 2px solid #e0e0e0;
       width: 64%;
+      max-width: 15rem;
  }
 
  input[type=checkbox] {
@@ -154,6 +160,11 @@ body {
  article {
      text-align: center;
  }
+
+ .buttons {
+   display: flex;
+   justify-content: center;
+ }
  
  button {
      background-color: #223f48;
@@ -162,8 +173,8 @@ body {
      text-align: center;
      font-size: 1.2em;
      cursor: pointer;
-     margin: 0.7rem auto;
      display: block;
+     margin:1rem;
  }
 
  button:hover {
@@ -175,6 +186,36 @@ body {
      color:rgb(219, 255, 166);
      background-color: #2a2a2a;
  }
+ 
+ @media (max-width:400px) {
+  button {
+    font-size: 5vw;
+    margin:1rem 0.5rem;
+    height: 2rem;
+  }
+ }
+ @media (max-height:400px) {
+
+  .menu-list, label {
+    font-size: 6vh;
+    line-height: 6vh;
+    }
+
+  label {
+    font-size: 5vh;
+    line-height: 5vh;
+  }
+
+  input {
+    height: 9vh;
+  }
+
+  button {
+    font-size: 4vh;
+  }
+}
+
+
 
  /* BOARD */
  .board-game {
@@ -191,9 +232,7 @@ body {
  
 
  .sideArea {
-  /* background-image: url(../img/board/bckgrd-Infos.jpg); */
   background-repeat: repeat;
-  /* min-width: 250px; */
   height: 100%;
   position: relative;
   background-color: #3c6e7e;
@@ -201,7 +240,6 @@ body {
 }
 
 .boardArea {
-  /* background-image: url(../img/board/bckgrd-board.jpg);    */
   background-color: #3e7688;
   width: inherit;
   height: 100%;
@@ -209,7 +247,10 @@ body {
   flex-wrap: wrap ;
   display: inline-block;
   grid-area: boardArea;
+  overflow: auto;
 }
+
+
 
  .playerCards {
     background-color: #365762;
@@ -220,7 +261,6 @@ body {
     border-left: 7px solid #1e2e33;
     border-right: 7px solid #1e2e33;
     padding: 0.3rem;
-    /* min-height:14rem; */
     grid-area: playerArea;
     display: -webkit-box;
     overflow: auto;
@@ -229,16 +269,6 @@ body {
     grid-template-areas: 
       "cardComponent1 cardComponent2 cardComponent3 cardComponent4 cardComponent5 cardComponent6 cardComponent7";
 }
-
-
-
-      /* SIDE AND DROP */
-      /* .side-and-drop {
-      width: 100%;
-      height: 65%;
-      display: flex;
-      grid-area: sidebar;
-      } */
 
       /* SIDE AREA */
 
@@ -250,19 +280,27 @@ body {
           z-index: 10;
       }
 
-      .exemple-card {
-          position: fixed;
-          left: 40%;
-          top: 18%;
-          z-index: 11;
+      .exemple-container {
+        z-index: 11;
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
       }
 
-      .close-button {
-          position: fixed;
-          left: 58%;
-          top: 12%;
-          z-index: 11;
+      .exemple-card {
+        z-index: 11;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
+
+      .exemple-card img {
+        height: 90%;
+      }
+
 
       .border-left-side {
           background-image: url(../img/board/border-left-infos.jpg);
@@ -285,7 +323,7 @@ body {
         color: rgb(49, 49, 49);
         font-family: 'Staatliches';
         text-align: center;
-        font-size: 1em;
+        font-size: calc(12px + 0.6vw);
         z-index: 2;
       }
 
@@ -305,7 +343,7 @@ body {
           width: 50%;
           height: 20%;
           background-size: contain;
-          background-position: center;
+          background-position: bottom;
           background-repeat: no-repeat;
           position: absolute;
           bottom: 0;
@@ -384,6 +422,33 @@ body {
       color:rgb(0, 0, 0);
       font-family: 'AdobeDia';
 
+  }
+
+  .results {
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    flex-direction: column;
+    z-index: 99;
+  }
+
+  .results img {
+    z-index: 99;
+  }
+
+  .score {
+    font-size: 3em;
+    color:#FDFF2F;
+    font-family: 'Staatliches';
+    text-transform: uppercase;
+    z-index: 99;
+  }
+
+  .back {
+    z-index: 99;
   }
 
 /* ANIMATIONS */
@@ -481,7 +546,7 @@ body {
 }
 
 /* mobile portrait */
-@media (max-width: 500px) {
+@media (max-width: 900px) {
   .board-game {
     grid-template-columns: 100%;
     grid-template-rows: 20% 55% 25%;
@@ -505,7 +570,7 @@ body {
 
   .infosFieldContainer {
     width: 45%;
-    margin-left:25%;
+    margin-left:7rem;
     bottom:40%;
   }
 
@@ -513,7 +578,7 @@ body {
     height: 26%;
     bottom: 38%;
     width: 24%;
-    left: 23%;
+    left: 6.3rem;
   }
 
   .endOfRound {
@@ -528,4 +593,12 @@ body {
     top: 68%;
   }
 
+
+
+}
+
+@media (min-width: 800px) {
+  .infosField {
+    font-size: 1em;
+    }
 }

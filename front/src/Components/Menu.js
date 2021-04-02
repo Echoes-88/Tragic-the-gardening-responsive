@@ -6,7 +6,7 @@ const InitGame = require('./InitGame');
 
 const Store = require('../Store');
 
-const Menu = {
+var Menu = {
 
     unLogged: () => {
 
@@ -27,7 +27,7 @@ const Menu = {
             loginForm.addEventListener('submit', async (datas) => {
 
                 const response = await MiddlewareLog.handleLogin(datas);
-                (response ? Menu.logged() : console.log("T qui ?"));
+                (response ? Menu.logged() : console.log("erreur de login"));
             });
 
             // Listen back to menu
@@ -71,7 +71,7 @@ const Menu = {
 
     logged: () => {
 
-        console.log(Store)
+
         const mainContainer = document.querySelector('.container');
         mainContainer.innerHTML = DomRenderMenu.render('logged');
 

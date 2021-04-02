@@ -45,6 +45,7 @@ const Card = {
             ${decks.map(deck => 
                 `
                 <div class="deck-container">
+                <img class="deck" src="./assets/img/Deck.png">
                 <p>Deck : "${deck.title}"</p>
                 <div class="card-deck"></div>
                 <button class="play-deck" id="${deck.id}">Play with this deck</button>

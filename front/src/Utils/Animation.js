@@ -17,7 +17,7 @@ var animation = {
     },
 
     moveCards: function(cpterCard, playerCard) {
-
+        cpterCard.style.zIndex = "999";
         const positionPlayerCard = dragAndDrop.getPosition(playerCard);
         const positionCpterCard = dragAndDrop.getPosition(cpterCard);
 
@@ -36,6 +36,7 @@ var animation = {
     });
 
     setTimeout(function(){ 
+    cpterCard.style.zIndex = "5";
     // cpterCard.removeAttribute('style');
     animation.blink(cpterCard, playerCard);
     }, 1000);
@@ -51,7 +52,6 @@ var animation = {
 
         animation.blink(domBoosterCard, domMonsterCard);
     }
-
 }
 
 module.exports = animation;

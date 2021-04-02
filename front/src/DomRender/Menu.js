@@ -7,7 +7,6 @@ const Menu = {
             <nav class="menu">
             <ul>
             <li class="menu-list" set-menu="play"><a href="">PLAY</a></li>
-            <li class="menu-list" set-menu="account"><a href="">MON COMPTE</a></li>
             </ul>
         </nav>
         `

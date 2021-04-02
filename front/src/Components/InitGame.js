@@ -8,12 +8,13 @@ const MiddlewareDeck = require('../Middleware/Deck');
 // Render
 const DomRenderCard = require('../DomRender/Card');
 
-const InitGame = {
+var InitGame = {
 
-    init: () => {
-        if(event) {
-            event.preventDefault();
-        }
+    init: function() {
+        // if(event) {
+        //     event.preventDefault();
+        // }
+        event.preventDefault();
 
         console.log(Store)
 

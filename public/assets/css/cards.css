@@ -1,13 +1,8 @@
 .drop-area {
-    width: 100%;
     height: 50%;
-    padding:1%;
-    align-items: flex-end;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    overflow-x: hidden;
+    padding: 1%;
     white-space: nowrap;
-    display: flex;
+    display: -webkit-box;
 }
 
 .cpterCards {
@@ -21,30 +16,11 @@
     z-index:5;
 }
 
-/* .playerCards {
-    background-color: #365762;
-    height: 100%;
-    width: 100vw;
-    display: -webkit-inline-box;
-    align-items: flex-end;
-    overflow-x: scroll;
-    overflow: auto;
-    border-top: 7px solid #1e2e33;
-    border-left: 7px solid #1e2e33;
-    border-right: 7px solid #1e2e33;
-    padding: 0.3rem;
-} */
-
 .cardComponent {
     position: relative;
     height: 100%;
     overflow: hidden;
 }
-
-
-.drop-area .cardComponent {
-    max-height: 210px;
-  }
 
 .card-main-container {
     height: 100%;
@@ -98,7 +74,7 @@
 .bas {
     height: 15%;
     z-index:3;
-    padding-left: 10%;
+    padding-left: 9%;
     padding-top: 4%;
 }
    
@@ -133,7 +109,7 @@
 
    .defense {
     color:#52869f;
-    margin-left: 70%;
+    margin-left: 72%;
     }
 
     .hit_point {
@@ -142,9 +118,7 @@
 
 
     @media (max-width:900px) {
-        .haut {
-            padding-top: 2%;
-        }
+
         .attack, .defense, .hit_point, .boost {
             font-size: 1em;
         }
@@ -156,15 +130,21 @@
 
 @media (max-height: 500px) {
 
+    .cpterCards .cardComponent {
+        height: 100%;
+    }
+
+    .drop-area .cardComponent {
+        height: 100%;
+    }
+
+
     .cardComponent {
         /* height: 210px; */
         height: 20vh;
         min-height: 130px;
       }
 
-    /* .cardComponent {
-        margin: auto;
-    } */
     .playerCards .cardComponent {
         margin: auto;
     }

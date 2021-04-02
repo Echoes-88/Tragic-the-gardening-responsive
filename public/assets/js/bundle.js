@@ -9,12 +9,13 @@ const MiddlewareDeck = require('../Middleware/Deck');
 // Render
 const DomRenderCard = require('../DomRender/Card');
 
-const InitGame = {
+var InitGame = {
 
-    init: () => {
-        if(event) {
-            event.preventDefault();
-        }
+    init: function() {
+        // if(event) {
+        //     event.preventDefault();
+        // }
+        event.preventDefault();
 
         console.log(Store)
 
@@ -72,7 +73,7 @@ const InitGame = require('./InitGame');
 
 const Store = require('../Store');
 
-const Menu = {
+var Menu = {
 
     unLogged: () => {
 
@@ -93,7 +94,7 @@ const Menu = {
             loginForm.addEventListener('submit', async (datas) => {
 
                 const response = await MiddlewareLog.handleLogin(datas);
-                (response ? Menu.logged() : console.log("T qui ?"));
+                (response ? Menu.logged() : console.log("erreur de login"));
             });
 
             // Listen back to menu
@@ -137,7 +138,7 @@ const Menu = {
 
     logged: () => {
 
-        console.log(Store)
+
         const mainContainer = document.querySelector('.container');
         mainContainer.innerHTML = DomRenderMenu.render('logged');
 
@@ -153,8 +154,9 @@ const Store = require('../Store');
 
 // Render
 const DomRenderBoardGame= require('../DomRender/BoardGame');
-const DomRenderTutorial = require('../DomRender/Tutorial');
+const DomRenderOther = require('../DomRender/Other');
 const DomRenderCard= require('../DomRender/Card');
+const Menu = require('../DomRender/Menu');
 
 // Middleware
 const MiddlewareDeck = require('../Middleware/Deck');
@@ -163,16 +165,21 @@ const MiddlewareDeck = require('../Middleware/Deck');
 const dragAndDrop = require('../Utils/DragAndDrop');
 const animation = require('../Utils/Animation');
 
+const app = require('../app');
+
+
 let round = 0;
 
 let userDeck = {
     monsters: [],
     boosters: [],
+    cardsOnBoard: []
 };
 
 let cpterDeck = {
     monsters: [],
     boosters: [],
+    cardsOnBoard: []
 };
 
 const PlayGame = {
@@ -185,7 +192,8 @@ const PlayGame = {
         // Tutorial
         const mainContainer = document.querySelector('.container');
         mainContainer.classList.remove('container')
-        mainContainer.innerHTML = DomRenderTutorial.card();
+        mainContainer.classList.add('board-game')
+        mainContainer.innerHTML = DomRenderOther.card();
 
         const close = document.querySelector(".close-button");
         close.addEventListener('click', function() {
@@ -247,6 +255,10 @@ const PlayGame = {
             cpterDeck.monsters.forEach(card => {card.key = inc++; card.onBoard = false; card.type = 'monster'; card.owner = 'cpter'});
             cpterDeck.boosters.forEach(card => {card.key = inc++; card.onBoard = false; card.type = 'booster'; card.owner = 'cpter'});
             cpterDeck.cardsOnBoard = [];
+
+            document.querySelector('.playerCards').addEventListener('mousewheel', function(e) {
+                this.scrollTop += e.deltaY;
+            });
          
             // launch game
             PlayGame.userRound();
@@ -260,9 +272,9 @@ const PlayGame = {
 
         console.log('user deck', userDeck, 'cpter deck', cpterDeck)
 
-        if((userDeck.monsters.length <= 0) && (userDeck.cardsOnBoard.length <= 0)) {
-            console.log("YOU LOOSE !!")
-            // const infosField = document.querySelector('.infosField');
+        // If computer still has cards on hand but none onBoard and user can't play, switch on cpter round (To do : add +1def to user cards)
+        if((cpterDeck.cardsOnBoard.length == 0) && (round > 1) && (userDeck.monsters.length === 0) && (userDeck.boosters.length === 0)) {
+            PlayGame.cpterRound();
         }
 
         if((userDeck.monsters.length + userDeck.cardsOnBoard.length) < 3) {
@@ -292,7 +304,7 @@ const PlayGame = {
             userCardDom.addEventListener('dragend', function () {
 
                 // Change picture vault boy
-                if(userDeck.monsters.length >= 3) {
+                if((userDeck.monsters.length + userDeck.cardsOnBoard.length) >= 3) {
                     let vaultBoy = document.querySelector('.vault-boy');
                     vaultBoy.style.backgroundImage = 'url(assets/img/vault-boy/vault-boy.png)';
                 }
@@ -301,55 +313,26 @@ const PlayGame = {
                 var x = event.clientX, y = event.clientY,
                 eltFlewOver = document.elementFromPoint(x, y);
 
+                
 
-                if(userCardDom.classList.contains("booster")) {
-
-                    if(eltFlewOver.classList.contains("user")) {
-
-                        // Detect monster card selected
-                        const monsterCardDom = eltFlewOver.closest('.cardComponent');
-
-                        // Get monster informations
-                        const cardKeyMonster = monsterCardDom.getAttribute('data-key');
-                        const monster = userDeck.cardsOnBoard.find(card => card.key == cardKeyMonster);
-
-                        // Get booster informations
-                        const cardKeyBooster = userCardDom.getAttribute('data-key');
-                        const booster = userDeck.boosters.find(booster => booster.key == cardKeyBooster);
-
-
-                        // Detect type of booster
-                        const typeBooster = booster.special_effect_text;
-                        // FAIRE UNE FONCTION PROMESSE OU UNE ANIMATION POUR ATTENDRE LE FIN DE MONSTER
-                        const bonus = booster.special_effect_value + monster[typeBooster];
-
-                        // update monster card value in dom
-                        let textBonus = monsterCardDom.querySelector(`.${typeBooster}`);
-                        textBonus.textContent = bonus;
-        
-                        // update monster card value
-                        monster[typeBooster] = bonus;
-        
-                        userCardDom.remove();
-
-                    }
-
-                } else {
 
                 // player put card on board
-                if ((eltFlewOver.className === 'drop-area') || (eltFlewOver.className === 'drop-area show-message')) {
-
+                if ((eltFlewOver.className === 'drop-area') || (eltFlewOver.className === 'drop-area show-message') || (eltFlewOver.closest(".drop-area") && (!userCardDom.classList.contains("booster")) )) {
                     
                     if(round == 1) {
                     eltFlewOver.className = 'drop-area';
                     eltFlewOver.innerHTML = '';
                     }
 
-                    eltFlewOver.appendChild(userCardDom);
+                    if(userCardDom.parentNode.className === 'drop-area') {
+                        return
+                    } else {
+
+                    
+                    eltFlewOver.closest(".drop-area").appendChild(userCardDom);
 
                     // Disable draggable
                     const playerCards = document.querySelectorAll('.userCard');
-
                     for(const card of playerCards) { card.draggable = false; }
 
                     // Display message
@@ -386,7 +369,7 @@ const PlayGame = {
                         // Find card in state
                         const cardKey = userCardDom.getAttribute('data-key');
                         const monster = userDeck.monsters.find(monster => monster.key == cardKey);
-
+                        console.log("ici on essaie de pusher", monster)
                         userDeck.cardsOnBoard.push(monster);
 
                         // Delete card in main array
@@ -399,6 +382,8 @@ const PlayGame = {
                     }
 
                         endOfRoundButton.addEventListener('click', handleEndOfRound);
+                    }
+
                     
                 } else if ((eltFlewOver.parentNode.className === 'cpterCards') || (eltFlewOver.className === 'card-picture cpter'))  {
                     
@@ -414,11 +399,31 @@ const PlayGame = {
                         let cardDefense = cpterDeck.cardsOnBoard.find(card => card.key == cpterCardDom.getAttribute('data-key'))
                         PlayGame.fight(cardAttack, cardDefense);
                     }
+                } else if((eltFlewOver.className === 'card-picture user')) {
+
+                    //If user card is monster appendchild newcard
+                    if(eltFlewOver.classList.contains("monster")) {
+                        return;
+                    } else if(userCardDom.classList.contains("booster")) {
+                        console.log("coco")
+                        if(eltFlewOver.classList.contains("user")) {
+
+                            const dropArea = document.querySelector('.drop-area');
+                            dropArea.appendChild(userCardDom);
+
+                            // Detect monster card selected
+                            const monsterCardDom = eltFlewOver.closest('.cardComponent');
+
+                            PlayGame.userAddBooster(userCardDom, monsterCardDom);
+
+                            
+                        }
+                    }
                 }
                 
-                }
             });
         }
+        
     },
 
     cpterRound: function() {
@@ -459,16 +464,58 @@ const PlayGame = {
                 PlayGame.cpterAttack();
             } 
 
-        } else if((cpterDeck.length <= 0) && (cpterDeck.cardsOnBoard.length > 0)) {
-            PlayGame.cpterAttack();
         } else {
-            console.log("YOU WIN !!")
+            PlayGame.cpterAttack();
         }
 
     },
 
+    userAddBooster: async function(boosterCard, monsterCard) {
+
+        // Get monster informations
+        const cardKeyMonster = monsterCard.getAttribute('data-key');
+        const monster = await userDeck.cardsOnBoard.find(card => card.key == cardKeyMonster);
+
+        // Get booster informations
+        const cardKeyBooster = boosterCard.getAttribute('data-key');
+        const booster = await userDeck.boosters.find(booster => booster.key == cardKeyBooster);
+
+        animation.moveCards(boosterCard, monsterCard)
+
+
+
+        setTimeout(function(){ 
+
+            const typeBooster = booster.special_effect_text;
+
+            const bonus = booster.special_effect_value + monster[typeBooster];
+
+            // update monster card value in dom
+            let textBonus = monsterCard.querySelector(`.${typeBooster}`);
+            textBonus.textContent = bonus;
+
+            // update monster card value
+            monster[typeBooster] = bonus;
+
+            // Delete card in dom
+            boosterCard.remove();
+
+            // Delete card in state
+            let index = userDeck.boosters.indexOf(booster);
+            userDeck.boosters.splice(index, 1);
+
+            setTimeout(function(){ 
+                PlayGame.cpterRound();
+            }, 1000);
+            }, 2000);
+    },
+
 
     fight: function(cardAttack, cardDefense) {
+
+        // Disable draggable
+        const playerCards = document.querySelectorAll('.userCard');
+        for(const card of playerCards) { card.draggable = false; }
 
         // Algorithm for damage
         const coefficient = cardAttack.attack - cardDefense.defense;
@@ -505,7 +552,6 @@ const PlayGame = {
         }
 
         setTimeout(function(){ 
-
             // Update values in dom
             if(cardAttack.hit_point != initialAttackHp) {
                 let attackerHp = cardAttackDom.querySelector('.hit_point');
@@ -564,15 +610,42 @@ const PlayGame = {
                 }, 1000);
             }
 
-            // TOGGLE PLAYER ROUND
-            if(cardAttack.owner === 'cpter') {
-                PlayGame.userRound() ;
+            setTimeout(function(){ 
+            if((cpterDeck.monsters.length === 0) && (cpterDeck.cardsOnBoard.length === 0)) {
+                // User win
+                const mainContainer = document.querySelector('.board-game');
+                mainContainer.innerHTML = DomRenderOther.endGame("win");
+                const backMainMenu = document.querySelector('.back');
+                backMainMenu.addEventListener('click',  (e) => {
+                    e.preventDefault();
+                    document.location.reload();
+                    // mainContainer.classList = "container";
+                    // mainContainer.innerHTML = Menu.render("logged")
+                });
+            } else if((userDeck.monsters.length === 0) && (userDeck.cardsOnBoard.length === 0)) {
+                // Computer win
+                const mainContainer = document.querySelector('.board-game');
+                mainContainer.innerHTML = DomRenderOther.endGame("Loose");
+                const backMainMenu = document.querySelector('.back');
+                backMainMenu.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    mainContainer.classList.add("container");
+                    mainContainer.classList.remove("board-game")
+                    InitGame.init("pouet");
+                })
             } else {
-                setTimeout(function(){ 
-                    PlayGame.cpterRound();
-                }, 1000);
+            // TOGGLE PLAYER ROUND
+                if(cardAttack.owner === 'cpter') {
+                    PlayGame.userRound() ;
+                } else {
+                    setTimeout(function(){ 
+                        PlayGame.cpterRound();
+                    }, 1000);
+                }
             }
-            }, 3000);
+            }, 1000);
+
+        }, 3000);
 
     },
 
@@ -667,7 +740,7 @@ const PlayGame = {
 }
 
 module.exports = PlayGame;
-},{"../DomRender/BoardGame":4,"../DomRender/Card":5,"../DomRender/Tutorial":8,"../Middleware/Deck":9,"../Store":11,"../Utils/Animation":12,"../Utils/DragAndDrop":13}],4:[function(require,module,exports){
+},{"../DomRender/BoardGame":4,"../DomRender/Card":5,"../DomRender/Menu":7,"../DomRender/Other":8,"../Middleware/Deck":9,"../Store":11,"../Utils/Animation":12,"../Utils/DragAndDrop":13,"../app":15}],4:[function(require,module,exports){
 const BoardGame = {
     render: () => {
         
@@ -736,6 +809,7 @@ const Card = {
             ${decks.map(deck => 
                 `
                 <div class="deck-container">
+                <img class="deck" src="./assets/img/Deck.png">
                 <p>Deck : "${deck.title}"</p>
                 <div class="card-deck"></div>
                 <button class="play-deck" id="${deck.id}">Play with this deck</button>
@@ -779,17 +853,12 @@ const Form = {
                         placeholder="Votre mot de passe" autocomplete="on">
         
                 </div>
-            
-                <div class="checkbox mb-3">
-                    <label>
-                        <input type="checkbox" name="remember" value="remember-me"> Se souvenir de moi
-                    </label>
-                </div>
-                <div>
+                <div class="buttons">
                 <button class="" type="submit">Se connecter</button>
+                <button class="go-back">GO BACK</button>
                 </div>
             </form>
-            <button class="go-back">GO BACK</button>
+
         `
     },
 
@@ -847,7 +916,6 @@ const Menu = {
             <nav class="menu">
             <ul>
             <li class="menu-list" set-menu="play"><a href="">PLAY</a></li>
-            <li class="menu-list" set-menu="account"><a href="">MON COMPTE</a></li>
             </ul>
         </nav>
         `
@@ -867,20 +935,32 @@ const Menu = {
 
 module.exports = Menu;
 },{}],8:[function(require,module,exports){
-const Tutorial = {
+const Other = {
     card: () => {
-
             return `
             <div class="black-filter"></div>
-            <div class="exemple-card">
-                <img src="assets/img/exempleCard.png">
-            </div>
+            <div class="exemple-container">
             <button class="close-button">Close</button>
+                <div class="exemple-card">
+                <img src="assets/img/exempleCard.png">
+                <img src="assets/img/exempleCard-booster.png">
+                </div>
+            </div>
         `
+    },
+    endGame: (result) => {
+        return `
+        <div class="black-filter"></div>
+        <div class="results">
+            <img src="assets/img/${result}.png" class="logo">
+            <p class="score">YOU ${result}</p>
+            <button class="back">Back to main menu</button>
+        </div>
+    `
     }
 }
 
-module.exports = Tutorial;
+module.exports = Other;
 },{}],9:[function(require,module,exports){
 const Store = require('../Store');
 const InitGame = require('../Components/InitGame');
@@ -1086,7 +1166,7 @@ var animation = {
     },
 
     moveCards: function(cpterCard, playerCard) {
-
+        cpterCard.style.zIndex = "999";
         const positionPlayerCard = dragAndDrop.getPosition(playerCard);
         const positionCpterCard = dragAndDrop.getPosition(cpterCard);
 
@@ -1105,6 +1185,7 @@ var animation = {
     });
 
     setTimeout(function(){ 
+    cpterCard.style.zIndex = "5";
     // cpterCard.removeAttribute('style');
     animation.blink(cpterCard, playerCard);
     }, 1000);
@@ -1120,7 +1201,6 @@ var animation = {
 
         animation.blink(domBoosterCard, domMonsterCard);
     }
-
 }
 
 module.exports = animation;
@@ -1280,21 +1360,29 @@ module.exports = reloadCss;
 },{}],15:[function(require,module,exports){
 const Menu = require('./Components/Menu');
 const reloadCss = require('./Utils/ReloadCss');
-
-
+const Store = require('./Store');
 
 var app = {
 
 init: function () {
 
-    Menu.unLogged();
+    // console.log(sessionStorage.getItem('userDatas'))
+    if(sessionStorage.getItem('userDatas')) {
+        Store.user = JSON.parse(sessionStorage.getItem('userDatas'));
+        console.log(Store)
+        Menu.logged();
+    } else {
+        Menu.unLogged();
+    }
+
     // Reload css resolved responsiv problems
     // reloadCss.init();
 },
 };
 
 document.addEventListener('DOMContentLoaded', app.init);
-},{"./Components/Menu":2,"./Utils/ReloadCss":14}],16:[function(require,module,exports){
+module.exports = app;
+},{"./Components/Menu":2,"./Store":11,"./Utils/ReloadCss":14}],16:[function(require,module,exports){
 module.exports = require('./lib/axios');
 },{"./lib/axios":18}],17:[function(require,module,exports){
 'use strict';

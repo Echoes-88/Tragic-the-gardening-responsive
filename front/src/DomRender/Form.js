@@ -15,17 +15,12 @@ const Form = {
                         placeholder="Votre mot de passe" autocomplete="on">
         
                 </div>
-            
-                <div class="checkbox mb-3">
-                    <label>
-                        <input type="checkbox" name="remember" value="remember-me"> Se souvenir de moi
-                    </label>
-                </div>
-                <div>
+                <div class="buttons">
                 <button class="" type="submit">Se connecter</button>
+                <button class="go-back">GO BACK</button>
                 </div>
             </form>
-            <button class="go-back">GO BACK</button>
+
         `
     },
 
