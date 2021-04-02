@@ -112,11 +112,19 @@ body {
  .form {
   display: flex;
   flex-direction: column;
-  text-align: center;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+ }
+
+ .form button {
+  width: 8rem;
  }
 
  .form-label-group {
   margin-top: 2%;
+  width: 80%;
+    text-align: center;
  }
 
  .form-control {
