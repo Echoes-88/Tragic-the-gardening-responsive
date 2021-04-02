@@ -2,7 +2,7 @@ const Store = require('../Store');
 
 const MiddlewareLog = {
 
-    baseUrl: 'http://localhost:5000',
+    baseUrl: 'http://54.209.27.122:5000',
 
     handleLogin: async (data) => {
 
