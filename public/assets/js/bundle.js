@@ -970,7 +970,7 @@ const axios = require('axios');
 
 const MiddlewareDeck = {
 
-    baseUrl: 'http://54.209.27.122:5000',
+    baseUrl: 'http://localhost:5000',
 
     createOne: async (data) => {
 
@@ -1039,7 +1039,7 @@ const Store = require('../Store');
 
 const MiddlewareLog = {
 
-    baseUrl: 'http://54.209.27.122:5000',
+    baseUrl: 'http://localhost:5000',
 
     handleLogin: async (data) => {
 
